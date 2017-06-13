@@ -22,7 +22,9 @@ $stmt -> bindValue( ':amount' , $smsObject -> getValue(), PDO::PARAM_STR );
 	 
 $stmt -> execute();
 
+//Generowanie XML'a do wysyłki ( nie można używać poiskich znakó w treści sms'a )
 $return = $simPay -> generateXml( 'Twoj kod doladowania to ' . $smsCode );
 
+//Odpowiedź do serwerów simpay z wyugenerowanym XML'em
 echo $return;
 ?>
