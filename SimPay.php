@@ -1,10 +1,9 @@
 <?php
 class SimPay{
-	private static $simpayIp = '46.248.162.28';
-	private static $simpaySecondIp = '185.23.21.10';
-	
 	private $error = false;
 	private $errorCode = 0;
+
+	private $apiKey = '';
 	
 	public function generateCode(){
 		$charset='ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
@@ -21,12 +20,7 @@ class SimPay{
 	}
 	
 	public function parseSMS( $data ){
-		if( $_SERVER['REMOTE_ADDR'] != SimPay::$simpayIp && $_SERVER['REMOTE_ADDR'] != SimPay::$simpaySecondIp ){
-			$this -> setError( true , 2 );
-			
-			return false;
-		}
-		
+
 		if( !isset( $data[ 'sms_id' ] ) ){
 			$this -> setError( true , 1 );
 			
@@ -53,6 +47,18 @@ class SimPay{
 		
 		if( !isset( $data[ 'send_time' ] ) ){
 			$this -> setError( true , 1 );
+			
+			return false;
+		}
+
+		if( !isset( $data[ 'sign' ] ) ){
+			$this -> setError( true , 2 );
+			
+			return false;
+		}
+
+		if( hash( 'sha256' , $data['sms_id'] . $data['sms_text'] . $data['sms_from'] . $data['send_number'] . $data['send_time'] . $this -> apiKey ) != $data[ 'sign' ] ){
+			$this -> setError( true , 3 );
 			
 			return false;
 		}
@@ -83,7 +89,9 @@ class SimPay{
 			case 1:
 				return 'Missing Parameters';
 			case 2:
-				return 'Wrong IP';
+				return 'No Sign Param';
+			case 3:
+				return 'Wrong Sign';
 		}
 		
 		return '';
@@ -92,6 +100,10 @@ class SimPay{
 	private function setError( $state , $code ){
 		$this -> error = $state;
 		$this -> errorCode = $code;
+	}
+
+	public function setApiKey( $key ){
+		$this -> apiKey = $key;
 	}
 }
 
@@ -126,15 +138,6 @@ class SMS{
 		array( '91955' , 9.5 ),
 		array( '92055' , 10 ),
 		array( '92555' , 12.5 ),
-		array( '70908' , 0.25 ),
-		array( '71908' , 0.5 ),
-		array( '72998' , 1 ),
-		array( '73908' , 1.5 ),
-		array( '75908' , 2.5 ),
-		array( '76908' , 3 ),
-		array( '79908' , 4.5 ),
-		array( '91998' , 9.5 ),
-		array( '92598' , 12.5 ),
 	);
 	
 	public function parseSMS( $data ){

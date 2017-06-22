@@ -3,6 +3,8 @@ include( 'SimPay.php' );
 
 $simPay = new SimPay();
 
+$simPay -> setApiKey( '<klucz api>' );
+
 $smsObject = $simPay -> parseSMS( $_POST );
 
 if( $simPay -> isError() ){
