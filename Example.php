@@ -16,7 +16,7 @@ if( $simPay -> isError() ){
 }
 
 //Pobranie różnych części SMS'a np. SIM.TEST zwróci nam tablicę [ 'SIM' , 'TEST' ] lub SIM.TEST.TRESC zwróci nam [ 'SIM' , 'TEST' , 'TRESC' ] itp. itd.
-$arrayPieces = $simPay -> getPieces();
+$arrayPieces = $smsObject -> getPieces();
 
 //Generowanie kodu do zwrotu
 $smsCode = $simPay -> generateCode();
