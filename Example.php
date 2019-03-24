@@ -8,6 +8,8 @@ $username = 'username';
 $password = 'password';
 $database = 'database';
 $pdoObject = null;
+
+//Laczenie do bazy danych
 try{
 	$pdoObject = new PDO('mysql:host='.$host.';dbname='.$database.';port='.$port, $username, $password , array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'"));
 	$pdoObject->query('SET NAMES utf8mb4');
