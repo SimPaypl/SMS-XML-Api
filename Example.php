@@ -1,6 +1,22 @@
 <?php
 include( 'SimPay.php' );
 
+//Ustawienia MYSQL
+$host = 'localhost';
+$port = '3306'; 
+$username = 'username';
+$password = 'password';
+$database = 'database';
+$pdoObject = null;
+try{
+	$pdoObject = new PDO('mysql:host='.$host.';dbname='.$database.';port='.$port, $username, $password , array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'"));
+	$pdoObject->query('SET NAMES utf8mb4');
+	$pdoObject->query('SET CHARACTER SET utf8mb4');
+	$pdoObject->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch( PDOException $e ){
+	exit();
+}
+
 $simPay = new SimPay();
 
 //Ustawianie klucza api dostepnego w panelu usługi
