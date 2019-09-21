@@ -69,12 +69,16 @@ class SimPay{
 		
 		return $sms;
 	}
+
+	private function clearText( $text ){
+		return iconv('utf-8', 'ascii//TRANSLIT', $text);
+	}
 	
 	public function generateXml( $text ){
 		return 
 			'<?xml version="1.0" encoding="UTF-8"?>
 				<sms-response>
-					<sms-text>'.$text.'</sms-text>
+					<sms-text>' . $this -> clearText( $text ) . '</sms-text>
             </sms-response>';
 	}
 	
