@@ -1,6 +1,6 @@
-# :warning: Zalecamy używanie [nowej biblioteki](https://github.com/SimPaypl/SimPay-API-php)
+## :warning: Zalecamy używanie [nowej biblioteki](https://github.com/SimPaypl/SimPay-API-php)
 
-# SMS-XML-Api
+## SMS-XML-Api
 Partner przygotowuje link URL zgodnie z opisaną specyfikacją SimPay. W momencie złożenia przez użytkownika zamówienia (wysłanie wiadomości SMS), nasz system odpytuje URL podany przez partnera oraz pobiera kod bezpośrednio.
 
 ## Requirements
